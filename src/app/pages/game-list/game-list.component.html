@@ -1,1 +1,71 @@
-<p>game-list works!</p>
+<div class="game-list-container">
+    <mat-toolbar color="primary" class="header-toolbar">
+      <span class="title">Statzinator</span>
+      <span class="spacer"></span>
+      <button mat-icon-button (click)="refreshGames()" matTooltip="Refresh games">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </mat-toolbar>
+  
+    <div class="filter-container">
+      <div class="filter-label">Filter by:</div>
+      <div class="filters">
+        <mat-chip-set>
+          <mat-chip
+            (click)="filterByStatus('ALL')"
+            [class.selected-chip]="activeFilter === 'ALL'"
+            color="primary">
+            All
+          </mat-chip>
+          <mat-chip
+            (click)="filterByStatus('PENDING')"
+            [class.selected-chip]="activeFilter === 'PENDING'"
+            color="accent">
+            Pending
+          </mat-chip>
+          <mat-chip
+            (click)="filterByStatus('OVER')"
+            [class.selected-chip]="activeFilter === 'OVER'"
+            color="primary">
+            Completed
+          </mat-chip>
+          <mat-chip
+            (click)="filterByStatus('CANCELLED')"
+            [class.selected-chip]="activeFilter === 'CANCELLED'"
+            color="warn">
+            Cancelled
+          </mat-chip>
+          <mat-chip
+            (click)="filterByStatus('RESCHEDULED')"
+            [class.selected-chip]="activeFilter === 'RESCHEDULED'">
+            Rescheduled
+          </mat-chip>
+        </mat-chip-set>
+      </div>
+    </div>
+    
+    <div class="content-container">
+      <div *ngIf="loading" class="loading-container">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Loading games...</p>
+      </div>
+      
+      <div *ngIf="!loading && error" class="error-container">
+        <mat-icon color="warn">error</mat-icon>
+        <p>{{ error }}</p>
+        <button mat-raised-button color="primary" (click)="fetchGames()">Try Again</button>
+      </div>
+      
+      <div *ngIf="!loading && !error && filteredGames.length === 0" class="empty-container">
+        <mat-icon>sports</mat-icon>
+        <p>No games found for the selected filter.</p>
+      </div>
+      
+      <div *ngIf="!loading && !error && filteredGames.length > 0" class="games-grid">
+        <app-game-card 
+          *ngFor="let game of filteredGames" 
+          [game]="game">
+        </app-game-card>
+      </div>
+    </div>
+  </div>
