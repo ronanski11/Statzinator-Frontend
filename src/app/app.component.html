@@ -1,3 +1,35 @@
-<main>
-  <router-outlet></router-outlet>
+<mat-toolbar>
+
+  <button mat-button [matMenuTriggerFor]="menu" aria-label="Menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item [routerLink]="['']">
+      <mat-icon>home</mat-icon>
+      <span>Home</span>
+    </button>
+    <button mat-menu-item [routerLink]="['games']">
+      <mat-icon>gamepad</mat-icon>
+      <span>Spiele</span>
+    </button>
+  </mat-menu>
+
+  <header>Game-Collection</header>
+
+  <span class="toolbar__spacer"></span>
+
+  <small>{{ pagetitle }}</small>
+
+  <span class="toolbar__spacer"></span>
+
+  <app-login></app-login>
+
+</mat-toolbar>
+
+<main class="container">
+  <div class="container__section">
+
+    <router-outlet></router-outlet>
+
+  </div>
 </main>

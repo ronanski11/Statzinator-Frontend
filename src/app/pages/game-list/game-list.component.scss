@@ -5,12 +5,11 @@
   }
   
   .header-toolbar {
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    z-index: 10;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
   
   .title {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: 500;
   }
   
@@ -19,46 +18,33 @@
   }
   
   .filter-container {
-    padding: 16px;
-    background-color: #f5f5f5;
+    background-color: var(--mat-table-background-color, var(--mat-sys-surface));
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
     gap: 12px;
   }
   
   .filter-label {
     font-weight: 500;
-    margin-right: 8px;
+    font-size: 14px;
   }
   
   .filters {
     display: flex;
     gap: 8px;
-    flex-wrap: wrap;
   }
   
   .selected-chip {
-    font-weight: bold;
-    opacity: 1;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-  
-  .mat-chip {
-    opacity: 0.75;
-    transition: all 0.2s ease;
-    
-    &:hover {
-      opacity: 0.9;
-      cursor: pointer;
-    }
+    font-weight: 500;
   }
   
   .content-container {
-    padding: 16px;
-    flex-grow: 1;
-    overflow-y: auto;
-    background-color: #f9f9f9;
+    flex: 1;
+    overflow: auto;
+    padding: 0;
+    background: white;
   }
   
   .loading-container, .error-container, .empty-container {
@@ -66,32 +52,78 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    min-height: 200px;
-    padding: 32px;
+    padding: 40px 16px;
     gap: 16px;
   }
   
-  .error-container mat-icon, .empty-container mat-icon {
-    font-size: 48px;
-    width: 48px;
-    height: 48px;
+  .games-table {
+    width: 100%;
   }
   
-  .games-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 24px;
-    padding: 16px 0;
+  th.mat-header-cell {
+    font-weight: 500;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  
+  th.mat-header-cell, td.mat-cell {
+    padding: 0 16px;
+  }
+  
+  .teams-cell {
+    display: flex;
+    align-items: center;
+    align-items: center;
+    
+    .team-item {
+      .team-name {
+        font-weight: 500;
+      }
+      
+      .team-coach {
+        font-size: 12px;
+        color: var(--mat-table-row-item-outline-color, var(--mat-sys-outline, rgba(0, 0, 0, 0.12)));
+      }
+    }
+    
+    .vs-icon {
+      margin: 0 12px;
+      color: rgba(0, 0, 0, 0.3);
+    }
+  }
+  
+  .status-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .actions-cell {
+    display: flex;
+    gap: 4px;
+  }
+  
+  tr.mat-row {
+    height: 64px;
+  }
+  
+  tr.mat-row:hover {
+    background-color: rgba(0, 0, 0, 0.02);
   }
   
   @media (max-width: 768px) {
-    .games-grid {
-      grid-template-columns: 1fr;
-    }
-    
     .filter-container {
       flex-direction: column;
       align-items: flex-start;
+    }
+    
+    .teams-cell {
+      flex-direction: column;
+      align-items: center;
+      
+      .vs-icon {
+        transform: rotate(90deg);
+        margin: 4px 0;
+      }
     }
   }
