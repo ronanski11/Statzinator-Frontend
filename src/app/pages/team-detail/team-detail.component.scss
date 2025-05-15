@@ -1,0 +1,84 @@
+/* src/app/pages/team-detail/team-detail.component.scss */
+.team-detail-container {
+  margin: 20px 0;
+}
+
+.loading-container, .error-container, .no-players-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+  gap: 16px;
+}
+
+.team-card {
+  margin-bottom: 20px;
+}
+
+.team-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--mat-card-subtitle-text-color, var(--mat-sys-on-surface-variant));
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.coach-info {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.section-title {
+  margin: 16px 0 8px 0;
+  font-weight: 500;
+  color: var(--mat-card-header-text-color, var(--mat-sys-on-surface));
+}
+
+.section-divider {
+  margin: 20px 0;
+}
+
+.stats-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.players-table {
+  width: 100%;
+  margin-top: 16px;
+}
+
+th.mat-header-cell {
+  font-weight: 500;
+  color: var(--mat-table-header-headline-color, var(--mat-sys-on-surface-variant));
+}
+
+.mat-column-id {
+  width: 60px;
+}
+
+.mat-column-actions {
+  width: 80px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .mat-column-dateOfBirth, 
+  .mat-column-height,
+  .mat-column-weight {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .mat-column-age {
+    display: none;
+  }
+}

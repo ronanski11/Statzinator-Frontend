@@ -1,0 +1,68 @@
+/* src/app/pages/team-list/team-list.component.scss */
+.team-list-container {
+  padding: 16px;
+}
+
+.loading-container,
+.error-container,
+.empty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+  gap: 16px;
+}
+
+/* Flex-based layout for team cards */
+.teams-flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: flex-start;
+}
+
+.team-card-container {
+  flex: 0 0 calc(33.33% - 16px);
+  margin-bottom: 16px;
+  min-width: 250px;
+}
+
+.team-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.team-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #3f51b5;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+mat-card-content {
+  flex-grow: 1;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 960px) {
+  .team-card-container {
+    flex: 0 0 calc(50% - 16px);
+  }
+}
+
+@media (max-width: 600px) {
+  .team-card-container {
+    flex: 0 0 100%;
+  }
+}
