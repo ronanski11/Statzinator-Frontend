@@ -37,6 +37,14 @@
           <a mat-button color="accent" [routerLink]="['/teams']">
             <mat-icon>arrow_back</mat-icon> Back to Teams
           </a>
+          <a
+            *ngIf="isAdmin()"
+            mat-button
+            color="warn"
+            [routerLink]="['/team', team.id, 'edit']"
+          >
+            <mat-icon>edit</mat-icon> Edit Team
+          </a>
         </mat-card-actions>
       </mat-card-header>
 

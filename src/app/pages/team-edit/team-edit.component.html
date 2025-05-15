@@ -1,0 +1,84 @@
+<!-- src/app/pages/team-edit/team-edit.component.html -->
+<div class="edit-team-container">
+  <!-- Loading state -->
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Loading team details</p>
+  </div>
+
+  <!-- Error state -->
+  <div *ngIf="!loading && error" class="error-container">
+    <mat-icon color="warn">error</mat-icon>
+    <p>{{ error }}</p>
+    <button mat-button color="primary" (click)="loadTeamDetails()">
+      Try Again
+    </button>
+  </div>
+
+  <!-- Edit form -->
+  <div *ngIf="!loading && !error && team">
+    <mat-card class="edit-card">
+      <mat-card-header>
+        <div mat-card-avatar class="team-avatar">
+          <mat-icon>sports_basketball</mat-icon>
+        </div>
+        <mat-card-title>Edit Team</mat-card-title>
+        <mat-card-subtitle>Team #{{ team.id }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
+          <div class="form-content">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Team Name</mat-label>
+              <input
+                matInput
+                formControlName="name"
+                placeholder="Enter team name"
+                required
+              />
+              <mat-error *ngIf="teamForm.get('name')?.hasError('required')">
+                Team name is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Coach</mat-label>
+              <input
+                matInput
+                formControlName="coach"
+                placeholder="Enter coach name"
+                required
+              />
+              <mat-error *ngIf="teamForm.get('coach')?.hasError('required')">
+                Coach name is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="actions-container">
+            <button
+              type="button"
+              mat-button
+              color="accent"
+              (click)="cancel()"
+              [disabled]="saving"
+            >
+              <mat-icon>cancel</mat-icon> Cancel
+            </button>
+            <button
+              type="submit"
+              mat-raised-button
+              color="primary"
+              [disabled]="teamForm.invalid || saving"
+            >
+              <mat-icon>save</mat-icon>
+              <span *ngIf="!saving">Save Changes</span>
+              <span *ngIf="saving">Saving...</span>
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

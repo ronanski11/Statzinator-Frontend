@@ -7,6 +7,7 @@ import { TeamDetailComponent } from './pages/team-detail/team-detail.component';
 import { appCanActivate } from './guard/app.auth.guard';
 import { AppRoles } from './app.roles';
 import { NoAccessComponent } from './pages/no-access/no-access.component';
+import { TeamEditComponent } from './pages/team-edit/team-edit.component';
 
 export const routes: Routes = [
   {
@@ -43,6 +44,15 @@ export const routes: Routes = [
     data: {
       roles: [AppRoles.Read],
       pagetitle: 'Game Details',
+    },
+  },
+  {
+    path: 'team/:id/edit',
+    component: TeamEditComponent, // Update to use the new component
+    canActivate: [appCanActivate],
+    data: {
+      roles: [AppRoles.Admin],
+      pagetitle: 'Edit Team',
     },
   },
   {

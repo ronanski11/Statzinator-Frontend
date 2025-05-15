@@ -13,6 +13,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { TeamService } from '../../service/team.service';
 import { Team } from '../../models';
+import { AppAuthService } from '../../service/app.auth.service';
+import { AppRoles } from '../../app.roles';
 
 @Component({
   selector: 'app-team-detail',
@@ -47,8 +49,17 @@ export class TeamDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private teamService: TeamService
+    private teamService: TeamService,
+    private authService: AppAuthService
   ) {}
+
+  isAdmin(): boolean {
+    let isAdmin = false;
+    this.authService.getRoles().subscribe((roles) => {
+      isAdmin = roles.includes(AppRoles.Admin);
+    });
+    return isAdmin;
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
