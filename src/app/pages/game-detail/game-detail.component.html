@@ -1,0 +1,185 @@
+<!-- src/app/pages/game-detail/game-detail.component.html -->
+<div class="game-detail-container">
+  <!-- Loading state -->
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Loading game details</p>
+  </div>
+
+  <!-- Error state -->
+  <div *ngIf="!loading && error" class="error-container">
+    <mat-icon color="warn">error</mat-icon>
+    <p>{{ error }}</p>
+    <button mat-button color="primary" (click)="loadGameDetails()">
+      Try Again
+    </button>
+  </div>
+
+  <!-- Game details -->
+  <div *ngIf="!loading && !error && game" class="game-content">
+    <!-- Back navigation -->
+    <div class="navigation-bar">
+      <a mat-button color="accent" [routerLink]="['/games']">
+        <mat-icon>arrow_back</mat-icon> Back to Games
+      </a>
+      <div class="game-id">Game #{{ game.id }}</div>
+    </div>
+
+    <!-- Scoreboard -->
+    <div class="scoreboard">
+      <div class="team team-left">
+        <div class="team-logo">
+          <mat-icon>sports_basketball</mat-icon>
+        </div>
+        <div class="team-info">
+          <h2 class="team-name">{{ game.teams[0].name }}</h2>
+          <p class="team-coach">Coach: {{ game.teams[0].coach }}</p>
+          <a
+            mat-stroked-button
+            color="primary"
+            [routerLink]="['/team', game.teams[0].id]"
+          >
+            Team Details
+          </a>
+        </div>
+        <div class="team-score" *ngIf="hasStats()">
+          {{ getTeam1Points() }}
+        </div>
+      </div>
+
+      <div class="vs-container">
+        <span *ngIf="game.status === 'PENDING'">VS</span>
+        <mat-icon *ngIf="game.status === 'OVER'">emoji_events</mat-icon>
+        <mat-icon *ngIf="game.status === 'CANCELLED'">cancel</mat-icon>
+        <mat-icon *ngIf="game.status === 'RESCHEDULED'">event_repeat</mat-icon>
+      </div>
+
+      <div class="team team-right">
+        <div class="team-score" *ngIf="hasStats()">
+          {{ getTeam2Points() }}
+        </div>
+        <div class="team-info">
+          <h2 class="team-name">{{ game.teams[1].name }}</h2>
+          <p class="team-coach">Coach: {{ game.teams[1].coach }}</p>
+          <a
+            mat-stroked-button
+            color="primary"
+            [routerLink]="['/team', game.teams[1].id]"
+          >
+            Team Details
+          </a>
+        </div>
+        <div class="team-logo">
+          <mat-icon>sports_basketball</mat-icon>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game status message -->
+    <div *ngIf="game.status !== 'OVER'" class="status-message">
+      <p *ngIf="game.status === 'PENDING'">
+        The game has not been played yet. Check back later for game results!
+      </p>
+      <p *ngIf="game.status === 'CANCELLED'">This game has been cancelled.</p>
+      <p *ngIf="game.status === 'RESCHEDULED'">
+        This game has been rescheduled.
+      </p>
+    </div>
+
+    <!-- Game stats section (only for completed games) -->
+    <div *ngIf="game.status === 'OVER'" class="game-stats-container">
+      <h3 class="section-title">Game Statistics</h3>
+
+      <!-- No stats message -->
+      <div *ngIf="!hasStats()" class="no-stats-container">
+        <mat-icon>bar_chart</mat-icon>
+        <p>No statistics available for this game yet.</p>
+      </div>
+
+      <!-- Stats content -->
+      <div *ngIf="hasStats()">
+        <!-- Team comparison -->
+        <div class="team-comparison">
+          <div class="comparison-card">
+            <h4>Shooting</h4>
+            <div class="stat-row">
+              <div class="stat-label">Field Goal % (2PT)</div>
+              <div class="stat-bar">
+                <div class="stat-value team1">{{ getTeam1FG2Percent() }}%</div>
+                <div class="stat-value team2">{{ getTeam2FG2Percent() }}%</div>
+              </div>
+            </div>
+            <div class="stat-row">
+              <div class="stat-label">Field Goal % (3PT)</div>
+              <div class="stat-bar">
+                <div class="stat-value team1">{{ getTeam1FG3Percent() }}%</div>
+                <div class="stat-value team2">{{ getTeam2FG3Percent() }}%</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="comparison-card">
+            <h4>Team Stats</h4>
+            <div class="stat-row">
+              <div class="stat-label">Rebounds</div>
+              <div class="stat-bar">
+                <div class="stat-value team1">{{ getTeam1Rebounds() }}</div>
+                <div class="stat-value team2">{{ getTeam2Rebounds() }}</div>
+              </div>
+            </div>
+            <div class="stat-row">
+              <div class="stat-label">Assists</div>
+              <div class="stat-bar">
+                <div class="stat-value team1">{{ getTeam1Assists() }}</div>
+                <div class="stat-value team2">{{ getTeam2Assists() }}</div>
+              </div>
+            </div>
+            <div class="stat-row">
+              <div class="stat-label">Turnovers</div>
+              <div class="stat-bar">
+                <div class="stat-value team1">{{ getTeam1Turnovers() }}</div>
+                <div class="stat-value team2">{{ getTeam2Turnovers() }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Box Score -->
+        <div class="box-score-container">
+          <h4>Box Score</h4>
+          <div class="stats-table-container">
+            <table mat-table [dataSource]="statRows" class="stats-table">
+              <!-- Stat Key Column -->
+              <ng-container matColumnDef="key">
+                <th mat-header-cell *matHeaderCellDef>Statistic</th>
+                <td mat-cell *matCellDef="let row">{{ row.key }}</td>
+              </ng-container>
+
+              <!-- Team 1 Column -->
+              <ng-container matColumnDef="team1">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ game.teams[0].name }}
+                </th>
+                <td mat-cell *matCellDef="let row">{{ row.team1 }}</td>
+              </ng-container>
+
+              <!-- Team 2 Column -->
+              <ng-container matColumnDef="team2">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ game.teams[1].name }}
+                </th>
+                <td mat-cell *matCellDef="let row">{{ row.team2 }}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedStatColumns"></tr>
+              <tr
+                mat-row
+                *matRowDef="let row; columns: displayedStatColumns"
+              ></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 // Updated src/app/app.routes.ts
 import { Routes } from '@angular/router';
 import { GameListComponent } from './pages/game-list/game-list.component';
+import { GameDetailComponent } from './pages/game-detail/game-detail.component';
 import { TeamListComponent } from './pages/team-list/team-list.component';
 import { TeamDetailComponent } from './pages/team-detail/team-detail.component';
 import { appCanActivate } from './guard/app.auth.guard';
@@ -14,8 +15,8 @@ export const routes: Routes = [
     canActivate: [appCanActivate],
     data: {
       roles: [AppRoles.Read],
-      pagetitle: 'Teams Overview'
-    }
+      pagetitle: 'Teams Overview',
+    },
   },
   {
     path: 'team/:id',
@@ -23,20 +24,29 @@ export const routes: Routes = [
     canActivate: [appCanActivate],
     data: {
       roles: [AppRoles.Read],
-      pagetitle: 'Team Details'
-    }
+      pagetitle: 'Team Details',
+    },
   },
   {
     path: 'games',
     component: GameListComponent,
-    canActivate: [appCanActivate], 
+    canActivate: [appCanActivate],
     data: {
       roles: [AppRoles.Read],
-      pagetitle: 'All Games'
-    }
+      pagetitle: 'All Games',
+    },
+  },
+  {
+    path: 'games/:id',
+    component: GameDetailComponent,
+    canActivate: [appCanActivate],
+    data: {
+      roles: [AppRoles.Read],
+      pagetitle: 'Game Details',
+    },
   },
   {
     path: 'noaccess',
-    component: NoAccessComponent
+    component: NoAccessComponent,
   },
 ];

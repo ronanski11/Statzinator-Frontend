@@ -43,7 +43,6 @@ export class TeamDetailComponent implements OnInit {
     'height',
     'weight',
     'dateOfBirth',
-    'actions',
   ];
 
   constructor(
