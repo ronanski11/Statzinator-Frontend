@@ -14,22 +14,12 @@ export class GameService {
   constructor(private http: HttpClient) {
   }
 
-  private getHeaders(): HttpHeaders {
-    return new HttpHeaders({
-      Authorization: `Bearer ${environment.accessToken}`
-    });
-  }
-
   public getList(): Observable<Game[]> {
-    return this.http.get<Game[]>(environment.backendBaseUrl + this.backendUrl, {
-      headers: this.getHeaders()
-    });
+    return this.http.get<Game[]>(environment.backendBaseUrl + this.backendUrl);
   }
 
   public getOne(id: number): Observable<Game> {
-    return this.http.get<Game>(environment.backendBaseUrl + this.backendUrl + `/${id}`, {
-      headers: this.getHeaders()
-    });
+    return this.http.get<Game>(environment.backendBaseUrl + this.backendUrl + `/${id}`);
   }
 
 }

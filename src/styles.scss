@@ -1,11 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
+html, body { height: 100%; background-color: var(--mat-toolbar-container-background-color, var(--mat-sys-surface))}
 body { 
   margin: 0; 
   font-family: Roboto, "Helvetica Neue", sans-serif; 
-  background-color: #f9f9f9;
 }
+
+
 
 /* Override Material styles for more modern look */
 .mat-mdc-card {
