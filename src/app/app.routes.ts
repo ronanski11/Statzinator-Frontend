@@ -69,9 +69,4 @@ export const routes: Routes = [
     path: 'noaccess',
     component: NoAccessComponent,
   },
-  {
-    path: '',
-    redirectTo: '/teams',
-    pathMatch: 'full',
-  },
 ];
