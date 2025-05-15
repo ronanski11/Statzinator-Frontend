@@ -1,0 +1,159 @@
+<!-- src/app/pages/player-list/player-list.component.html -->
+<div class="player-list-container">
+  <div class="filter-container">
+    <div class="filter-label">Filter:</div>
+    <div class="filters">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Player Name</mat-label>
+        <input matInput [(ngModel)]="searchName" placeholder="Search by name" />
+        <button
+          *ngIf="searchName"
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          (click)="searchName = ''; applyFilters()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Team Name</mat-label>
+        <input matInput [(ngModel)]="searchTeam" placeholder="Search by team" />
+        <button
+          *ngIf="searchTeam"
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          (click)="searchTeam = ''; applyFilters()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" (click)="applyFilters()">
+        <mat-icon>search</mat-icon> Search
+      </button>
+
+      <button mat-button color="accent" (click)="resetFilters()">
+        <mat-icon>refresh</mat-icon> Reset
+      </button>
+    </div>
+  </div>
+
+  <div class="content-container">
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading players</p>
+    </div>
+
+    <div *ngIf="!loading && error" class="error-container">
+      <mat-icon color="warn">error</mat-icon>
+      <p>{{ error }}</p>
+      <button mat-button color="primary" (click)="loadPlayers()">
+        Try Again
+      </button>
+    </div>
+
+    <div
+      *ngIf="!loading && !error && filteredPlayers.length === 0"
+      class="empty-container"
+    >
+      <mat-icon>sports_kabaddi</mat-icon>
+      <p>No players found</p>
+    </div>
+
+    <div *ngIf="!loading && !error && filteredPlayers.length > 0">
+      <table
+        mat-table
+        [dataSource]="paginatedPlayers"
+        matSort
+        (matSortChange)="sortData($event)"
+        class="players-table"
+      >
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+          <td mat-cell *matCellDef="let player">#{{ player.id }}</td>
+        </ng-container>
+
+        <!-- Full Name Column -->
+        <ng-container matColumnDef="fullName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+          <td mat-cell *matCellDef="let player">{{ player.fullName }}</td>
+        </ng-container>
+
+        <!-- Team Column -->
+        <ng-container matColumnDef="team">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Team</th>
+          <td mat-cell *matCellDef="let player">
+            <div *ngIf="player.team" class="team-cell">
+              {{ player.team.name }}
+              <div class="team-coach">Coach: {{ player.team.coach }}</div>
+            </div>
+            <div *ngIf="!player.team" class="no-team">No team assigned</div>
+          </td>
+        </ng-container>
+
+        <!-- Age Column -->
+        <ng-container matColumnDef="age">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Age</th>
+          <td mat-cell *matCellDef="let player">{{ player.age }}</td>
+        </ng-container>
+
+        <!-- Physical Details Column -->
+        <ng-container matColumnDef="physical">
+          <th mat-header-cell *matHeaderCellDef>Physical</th>
+          <td mat-cell *matCellDef="let player">
+            <div class="physical-details">
+              <span>{{ player.height }} cm</span> /
+              <span>{{ player.weight }} kg</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Birth Date Column -->
+        <ng-container matColumnDef="dateOfBirth">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Birth Date</th>
+          <td mat-cell *matCellDef="let player">
+            {{ formatDate(player.dateOfBirth) }}
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let player">
+            <div class="actions-cell">
+              <button
+                mat-icon-button
+                color="primary"
+                *ngIf="player.team"
+                [routerLink]="['/team', player.team.id]"
+                matTooltip="View Team"
+              >
+                <mat-icon>sports</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns; sticky: true"
+        ></tr>
+        <tr mat-row *matRowDef="let player; columns: displayedColumns"></tr>
+      </table>
+
+      <mat-paginator
+        [length]="filteredPlayers.length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="pageIndex"
+        (page)="onPageChange($event)"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

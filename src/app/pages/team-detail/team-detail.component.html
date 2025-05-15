@@ -26,7 +26,9 @@
           </div>
         </mat-card-subtitle>
         <mat-card-actions class="team-actions">
-          <a
+          <a mat-button color="accent" [routerLink]="['/teams']">
+            <mat-icon>arrow_back</mat-icon> All Teams </a
+          ><a
             mat-button
             color="primary"
             [routerLink]="['/games']"
@@ -34,9 +36,7 @@
           >
             <mat-icon>sports</mat-icon> View Team Games
           </a>
-          <a mat-button color="accent" [routerLink]="['/teams']">
-            <mat-icon>arrow_back</mat-icon> Back to Teams
-          </a>
+
           <a
             *ngIf="isAdmin()"
             mat-button
