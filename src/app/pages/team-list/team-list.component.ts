@@ -1,12 +1,11 @@
 // src/app/pages/team-list/team-list.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatGridListModule } from '@angular/material/grid-list';
 
 import { TeamService } from '../../service/team.service';
 import { Team } from '../../models';
@@ -16,14 +15,11 @@ import { Team } from '../../models';
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule,
+    RouterLink,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    MatProgressSpinnerModule,
-    MatGridListModule,
-    RouterLink,
-    RouterOutlet
+    MatProgressSpinnerModule
   ],
   templateUrl: './team-list.component.html',
   styleUrl: './team-list.component.scss'
@@ -33,7 +29,7 @@ export class TeamListComponent implements OnInit {
   loading = true;
   error = '';
 
-  constructor(private teamService: TeamService) { }
+  constructor(private teamService: TeamService) {}
 
   ngOnInit(): void {
     this.loadTeams();

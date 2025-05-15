@@ -9,7 +9,7 @@ import { NoAccessComponent } from './pages/no-access/no-access.component';
 
 export const routes: Routes = [
   {
-    path: '',
+    path: 'teams',
     component: TeamListComponent,
     canActivate: [appCanActivate],
     data: {

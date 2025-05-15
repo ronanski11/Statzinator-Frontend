@@ -17,13 +17,15 @@ describe('AppComponent', () => {
   it(`should have the 'statzinator-frontend' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('statzinator-frontend');
+    expect(app.pagetitle).toEqual('statzinator-frontend');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, statzinator-frontend');
+    expect(compiled.querySelector('h1')?.textContent).toContain(
+      'Hello, statzinator-frontend'
+    );
   });
 });

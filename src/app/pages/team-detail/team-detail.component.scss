@@ -3,7 +3,9 @@
   margin: 20px 0;
 }
 
-.loading-container, .error-container, .no-players-container {
+.loading-container,
+.error-container,
+.no-players-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,7 +22,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--mat-card-subtitle-text-color, var(--mat-sys-on-surface-variant));
+  background-color: var(
+    --mat-card-subtitle-text-color,
+    var(--mat-sys-on-surface-variant)
+  );
   color: white;
   width: 40px;
   height: 40px;
@@ -57,7 +62,10 @@
 
 th.mat-header-cell {
   font-weight: 500;
-  color: var(--mat-table-header-headline-color, var(--mat-sys-on-surface-variant));
+  color: var(
+    --mat-table-header-headline-color,
+    var(--mat-sys-on-surface-variant)
+  );
 }
 
 .mat-column-id {
@@ -69,8 +77,13 @@ th.mat-header-cell {
   text-align: center;
 }
 
+.team-actions {
+  position: absolute;
+  right: 16px;
+}
+
 @media (max-width: 768px) {
-  .mat-column-dateOfBirth, 
+  .mat-column-dateOfBirth,
   .mat-column-height,
   .mat-column-weight {
     display: none;

@@ -1,12 +1,11 @@
 <!-- Updated src/app/app.component.html with teams menu item -->
 <mat-toolbar>
-
   <button mat-button [matMenuTriggerFor]="menu" aria-label="Menu">
     <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item [routerLink]="['']">
-      <mat-icon>home</mat-icon>
+    <button mat-menu-item [routerLink]="['teams']">
+      <mat-icon>sports</mat-icon>
       <span>Teams</span>
     </button>
     <button mat-menu-item [routerLink]="['games']">
@@ -24,13 +23,10 @@
   <span class="toolbar__spacer"></span>
 
   <app-login></app-login>
-
 </mat-toolbar>
 
 <main class="container">
   <div class="container__section">
-
     <router-outlet></router-outlet>
-
   </div>
 </main>
