@@ -58,7 +58,8 @@
               <button
                 mat-raised-button
                 color="primary"
-                [routerLink]="['/player/new?teamId=', team.id]"
+                [routerLink]="['/player/new']"
+                [queryParams]="{ teamId: team.id }"
               >
                 <mat-icon>person_add</mat-icon>
                 Add New Player

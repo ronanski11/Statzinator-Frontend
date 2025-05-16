@@ -62,7 +62,12 @@ export class PlayerNewComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {
     this.playerForm = this.fb.group({
-      fullName: ['', Validators.required],
+      fullName: [
+        '',
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(50),
+      ],
       height: ['', [Validators.required, Validators.min(0)]],
       weight: ['', [Validators.required, Validators.min(0)]],
       dateOfBirth: ['', Validators.required],
@@ -113,9 +118,30 @@ export class PlayerNewComponent implements OnInit {
     });
   }
 
+  calculateAge(birthDate: Date): number {
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    // If birth month is later in the year or same month but birth day is later, subtract one year
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  }
+
   onSubmit(): void {
     if (this.playerForm.valid) {
       this.saving = true;
+
+      // Create PlayerDto for creation
+      // Calculate age from date of birth
+      const birthDate = new Date(this.playerForm.value.dateOfBirth);
+      const age = this.calculateAge(birthDate);
 
       // Create PlayerDto for creation
       const playerDto: PlayerDto = {
@@ -124,8 +150,7 @@ export class PlayerNewComponent implements OnInit {
         weight: this.playerForm.value.weight,
         dateOfBirth: this.playerForm.value.dateOfBirth,
         teamId: this.playerForm.value.teamId,
-        // The backend will calculate the age based on the date of birth
-        age: 0, // This will be calculated by backend
+        age: age, // Set the calculated age
       };
 
       console.log('Sending PlayerDto for creation:', playerDto);

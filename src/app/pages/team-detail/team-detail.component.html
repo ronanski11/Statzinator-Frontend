@@ -27,24 +27,27 @@
         </mat-card-subtitle>
         <mat-card-actions class="team-actions">
           <a mat-button color="accent" [routerLink]="['/teams']">
-            <mat-icon>arrow_back</mat-icon> All Teams </a
-          ><a
-            mat-button
-            color="primary"
-            [routerLink]="['/games']"
-            [queryParams]="{ teamId: team.id }"
-          >
-            <mat-icon>sports</mat-icon> View Team Games
+            <mat-icon>arrow_back</mat-icon> All Teams
           </a>
-
-          <a
+          <div class="add-player-button" *ngIf="isAdmin()">
+            <button
+              mat-button
+              color="primary"
+              [routerLink]="['/player/new']"
+              [queryParams]="{ teamId: team.id }"
+            >
+              <mat-icon>person_add</mat-icon>
+              Add New Player
+            </button>
+          </div>
+          <button
             *ngIf="isAdmin()"
             mat-button
             color="warn"
             [routerLink]="['/team', team.id, 'edit']"
           >
             <mat-icon>edit</mat-icon> Edit Team
-          </a>
+          </button>
         </mat-card-actions>
       </mat-card-header>
 
@@ -98,20 +101,31 @@
               <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
               <td mat-cell *matCellDef="let player">
                 {{ formatDate(player.dateOfBirth) }}
-              </td>
-            </ng-container>
-
-            <!-- Actions Column -->
-            <ng-container matColumnDef="actions">
+              </td> </ng-container
+            ><ng-container matColumnDef="actions">
               <th mat-header-cell *matHeaderCellDef>Actions</th>
               <td mat-cell *matCellDef="let player">
-                <button
-                  mat-icon-button
-                  color="primary"
-                  matTooltip="View Player Details"
-                >
-                  <mat-icon>visibility</mat-icon>
-                </button>
+                <div class="actions-cell">
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    *ngIf="isAdmin()"
+                    [routerLink]="['/player', player.id, 'edit']"
+                    [queryParams]="{ teamId: team.id }"
+                    matTooltip="Edit Player"
+                  >
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    color="warn"
+                    *ngIf="isAdmin()"
+                    (click)="deletePlayer(player)"
+                    matTooltip="Delete Player"
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
               </td>
             </ng-container>
 

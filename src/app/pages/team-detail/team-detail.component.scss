@@ -78,6 +78,16 @@ th.mat-header-cell {
   position: absolute;
   right: 16px;
 }
+.actions-cell {
+  display: flex;
+  gap: 4px;
+}
+
+.add-player-button {
+  margin: 16px 0;
+  display: flex;
+  justify-content: flex-end;
+}
 
 @media (max-width: 768px) {
   .mat-column-dateOfBirth,
