@@ -49,7 +49,6 @@ export class PlayerListComponent implements OnInit {
 
   // Table properties
   displayedColumns: string[] = [
-    'id',
     'fullName',
     'team',
     'age',
