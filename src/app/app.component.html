@@ -4,6 +4,10 @@
     <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
+    <button mat-menu-item [routerLink]="['']">
+      <mat-icon>home</mat-icon>
+      <span>Home</span>
+    </button>
     <button mat-menu-item [routerLink]="['teams']">
       <mat-icon>sports</mat-icon>
       <span>Teams</span>

@@ -1,0 +1,145 @@
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.login-prompt {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+
+  mat-card {
+    max-width: 500px;
+    background-color: #fff8e1;
+    border-left: 4px solid #ffc107;
+  }
+
+  .login-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px;
+    text-align: center;
+
+    mat-icon {
+      font-size: 48px;
+      height: 48px;
+      width: 48px;
+      margin-bottom: 20px;
+      color: #ffc107;
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 1.8rem;
+    }
+
+    p {
+      margin: 0;
+      font-size: 1.1rem;
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+}
+
+.welcome-section {
+  text-align: center;
+  margin-bottom: 40px;
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 8px;
+    color: var(--mat-app-primary-color, #3f51b5);
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: var(--mat-form-field-state-text-color, rgba(0, 0, 0, 0.6));
+  }
+
+  mat-divider {
+    margin: 20px auto;
+    width: 80%;
+  }
+}
+
+.features-section {
+  margin-bottom: 40px;
+
+  h2 {
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    font-weight: 500;
+  }
+}
+
+.feature-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.feature-card {
+  width: 300px;
+  height: 100%;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  mat-card-content {
+    min-height: 80px;
+  }
+
+  mat-card-actions {
+    padding: 8px 16px 16px;
+  }
+}
+
+.feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--mat-app-primary-color, #3f51b5);
+  color: white;
+}
+
+.admin-section {
+  margin-top: 40px;
+
+  h2 {
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    font-weight: 500;
+  }
+
+  .action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .feature-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .feature-card {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .welcome-section h1 {
+    font-size: 2rem;
+  }
+}
