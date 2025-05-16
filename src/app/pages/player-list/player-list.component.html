@@ -38,6 +38,16 @@
       <button mat-button color="accent" (click)="resetFilters()">
         <mat-icon>refresh</mat-icon> Reset
       </button>
+      <div class="action-button-container" *ngIf="isAdmin()">
+        <button
+          mat-raised-button
+          color="primary"
+          [routerLink]="['/player/new']"
+        >
+          <mat-icon>person_add</mat-icon>
+          Add New Player
+        </button>
+      </div>
     </div>
   </div>
 
@@ -133,6 +143,23 @@
                 matTooltip="View Team"
               >
                 <mat-icon>sports</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                color="primary"
+                *ngIf="isAdmin()"
+                [routerLink]="['/player', player.id, 'edit']"
+                matTooltip="Edit Player"
+              >
+                <mat-icon>edit</mat-icon></button
+              ><button
+                mat-icon-button
+                color="warn"
+                *ngIf="isAdmin()"
+                (click)="deletePlayer(player)"
+                matTooltip="Delete Player"
+              >
+                <mat-icon>delete</mat-icon>
               </button>
             </div>
           </td>

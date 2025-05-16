@@ -15,6 +15,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { PlayerService } from '../../service/player.service';
 import { Player } from '../../models';
+import { AppAuthService } from '../../service/app.auth.service';
+import { AppRoles } from '../../app.roles';
+import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-player-list',
@@ -62,10 +67,63 @@ export class PlayerListComponent implements OnInit {
   pageSize = 10;
   pageIndex = 0;
 
-  constructor(private playerService: PlayerService) {}
+  constructor(
+    private playerService: PlayerService,
+    private authService: AppAuthService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.loadPlayers();
+  }
+
+  isAdmin(): boolean {
+    let isAdmin = false;
+    this.authService.getRoles().subscribe((roles) => {
+      isAdmin = roles.includes(AppRoles.Admin);
+    });
+    return isAdmin;
+  }
+
+  deletePlayer(player: Player): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '350px',
+      data: {
+        title: 'Delete Player',
+        message: `Are you sure you want to delete ${player.fullName}?`,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.playerService.deletePlayer(player.id).subscribe({
+          next: () => {
+            // Remove the player from the list
+            this.players = this.players.filter((p) => p.id !== player.id);
+            this.filteredPlayers = this.filteredPlayers.filter(
+              (p) => p.id !== player.id
+            );
+            this.updatePaginatedPlayers();
+
+            // Show success notification
+            this.snackBar.open(
+              `Player ${player.fullName} deleted successfully`,
+              'Close',
+              {
+                duration: 3000,
+              }
+            );
+          },
+          error: (error) => {
+            console.error('Error deleting player:', error);
+            this.snackBar.open('Failed to delete player', 'Close', {
+              duration: 3000,
+            });
+          },
+        });
+      }
+    });
   }
 
   loadPlayers(): void {

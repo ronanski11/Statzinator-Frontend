@@ -54,6 +54,16 @@
                 Coach name is required
               </mat-error>
             </mat-form-field>
+            <div class="action-button-container">
+              <button
+                mat-raised-button
+                color="primary"
+                [routerLink]="['/player/new?teamId=', team.id]"
+              >
+                <mat-icon>person_add</mat-icon>
+                Add New Player
+              </button>
+            </div>
           </div>
 
           <div class="actions-container">

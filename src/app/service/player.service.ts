@@ -108,10 +108,10 @@ export class PlayerService {
     );
   }
 
-  public updatePlayer(id: number, player: Player): Observable<Player> {
+  public updatePlayer(playerDto: PlayerDto, id: number): Observable<Player> {
     return this.http.put<Player>(
       environment.backendBaseUrl + this.playerBackendUrl + `/${id}`,
-      player
+      playerDto
     );
   }
 

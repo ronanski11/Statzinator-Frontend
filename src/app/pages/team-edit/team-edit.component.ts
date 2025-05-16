@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -33,6 +33,7 @@ import { TeamDto } from '../../models/dtos/team-dto.model';
     MatInputModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    RouterLink,
   ],
   templateUrl: './team-edit.component.html',
   styleUrl: './team-edit.component.scss',
