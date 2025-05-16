@@ -232,10 +232,11 @@ export class PlayerListComponent implements OnInit {
             new Date(b.dateOfBirth).getTime(),
             isAsc
           );
-        case 'team':
+        case 'team': {
           const teamA = a.team ? a.team.name : '';
           const teamB = b.team ? b.team.name : '';
           return this.compare(teamA, teamB, isAsc);
+        }
         default:
           return 0;
       }
