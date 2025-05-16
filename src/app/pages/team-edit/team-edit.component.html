@@ -33,6 +33,7 @@
               <mat-label>Team Name</mat-label>
               <input
                 matInput
+                type="text"
                 formControlName="name"
                 placeholder="Enter team name"
                 required
@@ -40,12 +41,23 @@
               <mat-error *ngIf="teamForm.get('name')?.hasError('required')">
                 Team name is required
               </mat-error>
+              <mat-error *ngIf="teamForm.get('name')?.hasError('minlength')">
+                Team name must be at least 2 characters long
+              </mat-error>
+              <mat-error *ngIf="teamForm.get('name')?.hasError('maxlength')">
+                Team name cannot exceed 50 characters
+              </mat-error>
+              <mat-error *ngIf="teamForm.get('name')?.hasError('pattern')">
+                Team name can only contain letters, numbers, spaces, and
+                characters like hyphens or apostrophes
+              </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>Coach</mat-label>
               <input
                 matInput
+                type="text"
                 formControlName="coach"
                 placeholder="Enter coach name"
                 required
@@ -53,7 +65,18 @@
               <mat-error *ngIf="teamForm.get('coach')?.hasError('required')">
                 Coach name is required
               </mat-error>
+              <mat-error *ngIf="teamForm.get('coach')?.hasError('minlength')">
+                Coach name must be at least 3 characters long
+              </mat-error>
+              <mat-error *ngIf="teamForm.get('coach')?.hasError('maxlength')">
+                Coach name cannot exceed 50 characters
+              </mat-error>
+              <mat-error *ngIf="teamForm.get('coach')?.hasError('pattern')">
+                Coach name can only contain letters, spaces, and characters like
+                hyphens or apostrophes
+              </mat-error>
             </mat-form-field>
+
             <div class="action-button-container">
               <button
                 mat-raised-button

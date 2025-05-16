@@ -2,9 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -64,14 +66,40 @@ export class PlayerNewComponent implements OnInit {
     this.playerForm = this.fb.group({
       fullName: [
         '',
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(50),
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+          Validators.pattern(/^[a-zA-Z\s]+$/), // Only allow letters and spaces
+        ],
       ],
-      height: ['', [Validators.required, Validators.min(0)]],
-      weight: ['', [Validators.required, Validators.min(0)]],
-      dateOfBirth: ['', Validators.required],
-      teamId: ['', Validators.required],
+      height: [
+        '',
+        [
+          Validators.required,
+          Validators.min(0),
+          Validators.max(300), // Reasonable max height in cm
+          Validators.pattern(/^\d+(\.\d{1,2})?$/), // Only numbers with up to 2 decimal places
+        ],
+      ],
+      weight: [
+        '',
+        [
+          Validators.required,
+          Validators.min(0),
+          Validators.max(250), // Reasonable max weight in kg
+          Validators.pattern(/^\d+(\.\d{1,2})?$/), // Only numbers with up to 2 decimal places
+        ],
+      ],
+      dateOfBirth: [
+        '',
+        [
+          Validators.required,
+          // Add custom validator to ensure date is not in the future
+          this.dateNotInFuture,
+        ],
+      ],
+      teamId: ['', [Validators.required]],
     });
   }
 
@@ -88,6 +116,20 @@ export class PlayerNewComponent implements OnInit {
         this.updateSelectedTeamName();
       }
     });
+  }
+
+  // Custom validator to prevent future dates
+  dateNotInFuture(control: AbstractControl): ValidationErrors | null {
+    if (!control.value) {
+      return null;
+    }
+    const today = new Date();
+    const inputDate = new Date(control.value);
+    // Remove time portion for comparison
+    today.setHours(0, 0, 0, 0);
+    inputDate.setHours(0, 0, 0, 0);
+
+    return inputDate > today ? { futureDate: true } : null;
   }
 
   updateSelectedTeamName(): void {

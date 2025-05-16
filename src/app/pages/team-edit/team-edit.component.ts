@@ -54,8 +54,24 @@ export class TeamEditComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {
     this.teamForm = this.fb.group({
-      name: ['', Validators.required],
-      coach: ['', Validators.required],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(50),
+          Validators.pattern(/^[a-zA-Z0-9\s\-'.]+$/), // Allow alphanumeric, spaces, hyphens, apostrophes, periods
+        ],
+      ],
+      coach: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+          Validators.pattern(/^[a-zA-Z\s\-'.]+$/), // Allow letters, spaces, hyphens, apostrophes, periods
+        ],
+      ],
     });
   }
 
